@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double x = sc.nextDouble();
+        double y = sc.nextDouble();
+
+        
+        if (y == 0) {
+            System.out.println("Division by zero");
+            return;
+        }
+
+        
+        int sign = ((x < 0) ^ (y < 0)) ? -1 : 1;
+        double absX = Math.abs(x);
+        double absY = Math.abs(y);
+
+        
+        double low = 0;
+        double high = Math.max(absX, 1.0); 
+        double mid = 0;
+
+        
+        for (int i = 0; i < 100; i++) {
+            mid = (low + high) / 2.0;
+            
+            if (absY * mid < absX) {
+                low = mid;   
+            } else {
+                high = mid;  
+            }
+        }
+
+        double result = mid * sign;
+
+       
+        if (result == (long) result) {
+            System.out.println((long) result);
+        } else {
+            System.out.println(result);
+        }
+    }
+}
