@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNext()) return;
+        String s = sc.next();
+        int n = s.length();
+
+        for (int p = 1; p <= n; p++) {
+            if (n % p == 0) {
+                boolean match = true;
+                String prefix = s.substring(0, p);
+                
+                for (int i = p; i < n; i += p) {
+                    if (!s.substring(i, i + p).equals(prefix)) {
+                        match = false;
+                        break;
+                    }
+                }
+                
+                if (match) {
+                    System.out.println(p);
+                    return;
+                }
+            }
+        }
+    }
+}
