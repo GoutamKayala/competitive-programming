@@ -1,0 +1,43 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNext()) return;
+        String s = sc.next();
+        
+        int seen = 0;
+        int duplicateMask = 0;
+        
+       
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            int bit = ch - 'a';
+            if ((seen & (1 << bit)) != 0) {
+                duplicateMask |= (1 << bit);
+            } else {
+                seen |= (1 << bit);
+            }
+        }
+        
+        int printed = 0;
+        ArrayList<String> duplicates = new ArrayList<>();
+        
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            int bit = ch - 'a';
+            if ((duplicateMask & (1 << bit)) != 0 && (printed & (1 << bit)) == 0) {
+                duplicates.add(Character.toString(ch));
+                printed |= (1 << bit);
+            }
+        }
+        
+        if (duplicates.isEmpty()) {
+            System.out.println("No duplicates");
+        } else {
+            System.out.println(String.join(" ", duplicates));
+        }
+    }
+}
