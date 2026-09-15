@@ -1,0 +1,41 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    public static boolean ispal(ArrayList<Character> ll){
+        int i=0;
+        int j=ll.size()-1;
+        while(i<j){
+            if(ll.get(i) != ll.get(j)){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+    
+    public static int getLong(int i,String str,ArrayList<Character> ll){
+        if(i >= str.length()){
+            if(ispal(ll)){
+                return ll.size();
+            }
+            return 0;
+        }
+        ll.add(str.charAt(i));
+        int take=getLong(i+1,str,ll);
+        ll.remove(ll.size()-1);
+        int dontTake=getLong(i+1,str,ll);
+        return Math.max(take,dontTake);
+    }
+    
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        String str=sc.next();
+        
+        
+        System.out.println(getLong(0,str,new ArrayList<>()));
+    }
+}
