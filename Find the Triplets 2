@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        int x=sc.nextInt();
+        boolean ex=false;
+        Arrays.sort(arr);
+        for(int i=0;i<n-2;i++){
+            int l=i+1;
+            int r=n-1;
+            while(l<r){
+                int currSum=arr[i]+arr[l]+arr[r];
+                if(currSum == x){
+                    ex=true;
+                    System.out.println(arr[i]+" "+arr[l]+" "+arr[r]);
+                    l++;
+                    r--;
+                }
+                else if(currSum < x){
+                    l++;
+                }
+                else{
+                    r--;
+                }
+            }
+        }
+        if(ex=false){
+            System.out.println("No Triplet Found");
+        }
+    }
+}
