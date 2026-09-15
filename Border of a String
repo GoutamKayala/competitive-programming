@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String s = reader.readLine();
+        
+        if (s == null || s.length() <= 1) {
+            System.out.println("");
+            return;
+        }
+        
+        int n = s.length();
+        int[] lps = new int[n];
+        int length = 0;
+        int i = 1;
+        
+        
+        while (i < n) {
+            if (s.charAt(i) == s.charAt(length)) {
+                length++;
+                lps[i] = length;
+                i++;
+            } else {
+                if (length != 0) {
+                    length = lps[length - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        
+        
+        int longestBorderLen = lps[n - 1];
+        
+        if (longestBorderLen == 0) {
+            System.out.println("");
+        } else {
+            System.out.println(s.substring(0, longestBorderLen));
+        }
+    }
+}
