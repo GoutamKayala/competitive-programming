@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        String line = sc.nextLine();
+        String[] dict = line.split(",");
+
+        String pattern = sc.nextLine();
+
+        boolean found = false;
+
+        for (String word : dict) {
+            int k = 0;
+
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
+
+                if (Character.isUpperCase(c)) {
+                    if (k < pattern.length() && c == pattern.charAt(k)) {
+                        k++;
+                    }
+                }
+            }
+
+            if (k == pattern.length()) {
+                System.out.println(word);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No match found");
+        }
+
+    }
+}
