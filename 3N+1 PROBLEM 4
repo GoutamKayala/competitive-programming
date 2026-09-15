@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+       
+        Scanner sc=new Scanner(System.in);
+        int i=sc.nextInt();
+        int j=sc.nextInt();
+        int maxC=0;
+        
+        for(int k=i;k<=j;k++){
+            int n=k;
+            int count=1;
+            while(n!=1){
+                if(n%2 == 0){
+                    n=n/2;
+                }
+                else{
+                    n=3*n+1;
+                }
+                count++;
+            }
+            maxC=Math.max(maxC,count);
+        }
+        System.out.println(i+" "+j+" "+maxC);
+    }
+}
