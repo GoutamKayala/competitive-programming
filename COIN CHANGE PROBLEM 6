@@ -1,0 +1,88 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.Arrays;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = null;
+        
+        while (true) {
+            if (st == null || !st.hasMoreTokens()) {
+                line = br.readLine();
+                if (line == null) break;
+                st = new StringTokenizer(line);
+                if (!st.hasMoreTokens()) continue;
+            }
+            
+            int V = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            
+            int[] tempCoins = new int[N];
+            int count = 0;
+            
+            while (count < N) {
+                if (st == null || !st.hasMoreTokens()) {
+                    line = br.readLine();
+                    if (line == null) break;
+                    st = new StringTokenizer(line);
+                    if (!st.hasMoreTokens()) continue;
+                }
+                while (st.hasMoreTokens() && count < N) {
+                    tempCoins[count++] = Integer.parseInt(st.nextToken());
+                }
+            }
+            
+            boolean[] hasCoin = new boolean[V + 1];
+            for (int i = 0; i < N; i++) {
+                int c = tempCoins[i];
+                if (c <= V) {
+                    hasCoin[c] = true;
+                }
+            }
+            
+            int uniqueCount = 0;
+            for (int i = 1; i <= V; i++) {
+                if (hasCoin[i]) uniqueCount++;
+            }
+            
+            int[] coins = new int[uniqueCount];
+            int idx = 0;
+            for (int i = 1; i <= V; i++) {
+                if (hasCoin[i]) {
+                    coins[idx++] = i;
+                }
+            }
+            
+            if (V == 0) {
+                sb.append("0\n");
+                continue;
+            }
+            
+            int[] dp = new int[V + 1];
+            Arrays.fill(dp, Integer.MAX_VALUE);
+            dp[0] = 0;
+            
+            for (int c : coins) {
+                for (int i = c; i <= V; i++) {
+                    if (dp[i - c] != Integer.MAX_VALUE) {
+                        if (dp[i - c] + 1 < dp[i]) {
+                            dp[i] = dp[i - c] + 1;
+                        }
+                    }
+                }
+            }
+            
+            if (dp[V] == Integer.MAX_VALUE) {
+                sb.append("-1\n");
+            } else {
+                sb.append(dp[V]).append("\n");
+            }
+        }
+        System.out.print(sb.toString());
+    }
+}
