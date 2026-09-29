@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        String s = br.readLine();
+        String p = br.readLine();
+        
+        
+        if (s == null) s = ""; else s = s.trim();
+        if (p == null) p = ""; else p = p.trim();
+        
+        if (isMatch(s, p)) {
+            System.out.println(1);
+        } else {
+            System.out.println(0);
+        }
+    }
+
+    public static boolean isMatch(String s, String p) {
+        int sLen = s.length();
+        int pLen = p.length();
+        
+        int sIdx = 0;
+        int pIdx = 0;
+        
+        int starIdx = -1;
+        int sTmpIdx = -1;
+        
+        while (sIdx < sLen) {
+            if (pIdx < pLen && (p.charAt(pIdx) == s.charAt(sIdx) || p.charAt(pIdx) == '?')) {
+                sIdx++;
+                pIdx++;
+            } 
+            else if (pIdx < pLen && p.charAt(pIdx) == '*') {
+                starIdx = pIdx;
+                sTmpIdx = sIdx;
+                pIdx++;
+            } 
+            else if (starIdx != -1) {
+                pIdx = starIdx + 1;
+                sTmpIdx++;
+                sIdx = sTmpIdx;
+            } 
+            else {
+                return false;
+            }
+        }
+        
+        while (pIdx < pLen && p.charAt(pIdx) == '*') {
+            pIdx++;
+        }
+        
+        return pIdx == pLen;
+    }
+}
